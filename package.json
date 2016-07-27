@@ -1,0 +1,30 @@
+{
+  "name": "arduino_logic_analyzer",
+  "version": "0.0.1",
+  "description": "a logic analyzer using arduino",
+  "main": "index.js",
+  "dependencies": {
+    "serialport": "^4.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arve0/arduino_logic_analyzer.git"
+  },
+  "keywords": [
+    "oscilloscope",
+    "logic",
+    "analyzer",
+    "arduino"
+  ],
+  "author": "Arve Seljebu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/arve0/arduino_logic_analyzer/issues"
+  },
+  "homepage": "https://github.com/arve0/arduino_logic_analyzer#readme"
+}
