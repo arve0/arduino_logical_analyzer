@@ -1,17 +1,35 @@
-const SerialPort = require('serialport');
+const { app, BrowserWindow } = require('electron');
 
-const port = new SerialPort('/dev/tty.usbserial-A900LEL7', {
-  baudRate: 115200,
-  parser: SerialPort.parsers.byteDelimiter([255, 252, 255])
-});
 
-port.on('data', (data) => {
-  var value = data[0] * 256 + data[1];
-  console.log(value);
-});
+// avoid window garbage collection
+let win;
+function createWindow () {
+  win = new BrowserWindow({width: 800, height: 600});
 
-process.on('SIGINT', () => {
-  port.close(() => {
-    process.exit(0);
+  win.loadURL(`file://${__dirname}/index.html`);
+
+  win.on('closed', () => {
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+    win = null;
   });
+}
+
+app.on('ready', createWindow);
+
+// Quit when all windows are closed.
+app.on('window-all-closed', () => {
+  // On macOS it is common for applications and their menu bar
+  // to stay active until the user quits explicitly with Cmd + Q
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
+});
+
+// OS X event, dock icon clicked
+app.on('activate', () => {
+  if (win === null) {
+    createWindow();
+  }
 });
