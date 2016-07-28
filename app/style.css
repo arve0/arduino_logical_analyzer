@@ -1,8 +1,6 @@
-#dot {
-  width: 5px;
-  height: 5px;
-  position: absolute;
-  top: -10;
-  left: -10;
-  background-color: #000;
+body {
+  margin: 0;
+}
+svg {
+  margin-top: 5px;
 }
