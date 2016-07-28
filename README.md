@@ -1,7 +1,5 @@
 # arduino logical analyzer
 
-Oscilloscope right now..
-
 ![](demo.gif)
 
 ## Development
