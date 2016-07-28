@@ -1,23 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Logic analyzer</title>
-  <style>
-    #dot {
-      width: 5px;
-      height: 5px;
-      position: absolute;
-      top: -10;
-      left: -10;
-      background-color: #000;
-    }
-  </style>
-</head>
-<body>
-  <div id="dot"></div>
-  <script>
-
 var SerialPort = require('serialport');
 
 const port = new SerialPort('/dev/tty.usbserial-A900LEL7', {
@@ -25,8 +5,8 @@ const port = new SerialPort('/dev/tty.usbserial-A900LEL7', {
   parser: SerialPort.parsers.byteDelimiter([255, 252, 255])
 });
 
-port.on('open', () => console.log('open'));
-port.on('close', () => console.log('closed'));
+port.on('open', () => console.log('port open'));
+port.on('close', () => console.log('port closed'));
 port.on('error', (e) => console.error(e));
 
 var x = 0;
@@ -47,6 +27,3 @@ function read (data) {
   x = x < 100 ? x + 0.1 : 0;
 }
 
-  </script>
-</body>
-</html>
