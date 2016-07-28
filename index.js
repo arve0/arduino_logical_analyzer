@@ -1,5 +1,13 @@
 const { app, BrowserWindow } = require('electron');
 
+// access argv from browser window
+global.tty = process.argv[2];
+if (!global.tty) {
+  console.log('You must supply the tty to your Arduino.');
+  console.log('Usage:');
+  console.log('\n    npm start -- /path/to/tty\n\n');
+  process.exit(1);
+}
 
 // avoid window garbage collection
 let win;

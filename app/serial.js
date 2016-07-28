@@ -1,16 +1,17 @@
 const SerialPort = require('serialport');
+const tty = require('electron').remote.getGlobal('tty');
 
 let port;
 
 module.exports = (state) => {
-  port = new SerialPort('/dev/tty.usbserial-A900LEL7', {
+  port = new SerialPort(tty, {
     baudRate: 9600,
     parser: SerialPort.parsers.byteDelimiter([255, 252, 255])
   });
 
   port.on('open', () => console.log('port open'));
   port.on('close', () => console.log('port closed'));
-  port.on('error', (e) => console.error(e));
+  port.on('error', (e) => alert(e));
   port.on('data', read);
 
   setTimeout(reconnect, 10 * 1000);
