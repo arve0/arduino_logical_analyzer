@@ -1,8 +1,10 @@
-const line = require('./line.js');
+const plot = require('./plot');
+const lines = require('./lines');
 const serial = require('./serial');
 
 const BUFFER = 2048;
 
+// TODO: move to own file, use getState() instead of passing as argument
 const state = {  // global state
   size: getSize(),
   points: [],
@@ -11,14 +13,15 @@ const state = {  // global state
 
 window.onresize = () => state.size = getSize();
 function getSize () {
-  return { x: window.innerWidth, y: window.innerHeight };
+  // 10 px margin top
+  return { x: window.innerWidth, y: window.innerHeight - 20 };
 }
 
 let interval = setInterval(() => {
   if (state.points.length > BUFFER) {
     state.points = state.points.slice(-BUFFER);
   }
-  state.container.innerHTML = line(state);
+  state.container.innerHTML = plot(state) + lines(state);
 }, 20);
 
 serial(state);

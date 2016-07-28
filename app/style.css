@@ -1,6 +1,18 @@
 body {
   margin: 0;
+  background-color: black;
 }
 svg {
-  margin-top: 5px;
+  position: absolute;
+  bottom: 0px;
+}
+.volt {
+  position: absolute;
+  border-bottom: 1px solid white;
+  width: 100%;
+  left: 0;
+  padding-left: 5px;
+  font-family: monospace;
+  font-weight: bold;
+  color: white;
 }
