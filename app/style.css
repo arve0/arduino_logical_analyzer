@@ -4,15 +4,21 @@ body {
 }
 svg {
   position: absolute;
-  bottom: 0px;
+  bottom: 0;
 }
-.volt {
+.voltageLine {
   position: absolute;
   border-bottom: 1px solid white;
-  width: 100%;
+  width: inherit;
   left: 0;
   padding-left: 5px;
   font-family: monospace;
   font-weight: bold;
+  color: white;
+}
+#show {
+  position: fixed;
+  top: 0;
+  right: 0;
   color: white;
 }

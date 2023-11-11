@@ -1,0 +1,2 @@
+- https://github.com/arduino/Arduino/blob/master/build/shared/manpage.adoc
+- https://github.com/electron-userland/electron-packager

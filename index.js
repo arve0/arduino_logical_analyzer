@@ -10,8 +10,8 @@ if (!global.tty) {
 }
 
 // avoid window garbage collection
-let win;
-function createWindow () {
+let win, settings;
+function createWindows () {
   win = new BrowserWindow({width: 800, height: 600});
 
   win.loadURL(`file://${__dirname}/app/index.html`);
@@ -22,9 +22,12 @@ function createWindow () {
     // when you should delete the corresponding element.
     win = null;
   });
+
+  settings = new BrowserWindow({width: 400, height: 400, parent: win});
+  settings.loadURL(`file://${__dirname}/app/settings.html`);
 }
 
-app.on('ready', createWindow);
+app.on('ready', createWindows);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
@@ -38,6 +41,6 @@ app.on('window-all-closed', () => {
 // OS X event, dock icon clicked
 app.on('activate', () => {
   if (win === null) {
-    createWindow();
+    createWindows();
   }
 });

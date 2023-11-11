@@ -1,25 +1,35 @@
+const state = require('./state')();
 
-module.exports = (state) => `
-  <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
-       width="${state.size.x}" height="${state.size.y}">
-    <g transform="translate(0,${state.size.y})">
-      ${path(state)}
-    </g>
-  </svg>
-`.trim();
+const COLORS = ['red', 'blue', 'green', 'white'];
 
-function path (state) {
-  return `<path d="${line(state.points, state.size)}" fill="transparent" stroke="blue" stroke-width="5" />`;
+module.exports = (channel) => {
+  if (!state.show[channel]) {
+    return '';
+  }
+  let length = state.measurements[channel].length;
+  return `
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+        width="${length}" height="${state.size.y}">
+      <g transform="translate(0,${state.size.y})">
+        ${path(channel)}
+      </g>
+    </svg>`.trim();
+};
+
+function path (channel) {
+  return `<path d="${line(state.measurements[channel])}" fill="transparent" stroke="${COLORS[channel]}" stroke-width="3" />`;
 }
 
-function line (points, maxSize) {
+function line (points) {
+  let maxSize = state.size;
   if (points.length < 1) {
     return '';
   } else if (points.length === 1) {
     return 'M' + points[0];
-  } else if (points.length > maxSize.x) {
-    return line(points.slice(-maxSize.x), maxSize);
   }
+  //  else if (points.length > maxSize.x) {
+  //   return line(points.slice(-maxSize.x), maxSize);
+  // }
 
   const start = points[0][0];
   // shift to x = 0, scale y

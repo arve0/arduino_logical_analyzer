@@ -1,32 +1,25 @@
 const plot = require('./plot');
-const lines = require('./lines');
+const voltageLines = require('./voltage-lines');
 const serial = require('./serial');
+const control = require('./control');
 
-const BUFFER = 2048;
+const state = require('./state')();
 
-// TODO: move to own file, use getState() instead of passing as argument
-const state = {  // global state
-  size: getSize(),
-  points: [],
-  container: document.getElementById('container')
-};
+serial();
+let interval = setInterval(draw, 20);
 
-window.onresize = () => state.size = getSize();
-function getSize () {
-  // 10 px margin top
-  return { x: window.innerWidth, y: window.innerHeight - 20 };
+function draw () {
+  state.container.style.width = state.measurements[0].length + 'px';
+  state.container.innerHTML = '';
+  for (let ch = 0; ch < state.channels; ch += 1) {
+    state.container.insertAdjacentHTML('beforeend', plot(ch));
+  }
+  state.container.insertAdjacentHTML('beforeend', voltageLines(state));
+  state.container.insertAdjacentHTML('beforeend', control());
+  window.scrollTo(state.measurements[0].length, 0);
 }
 
-let interval = setInterval(() => {
-  if (state.points.length > BUFFER) {
-    state.points = state.points.slice(-BUFFER);
-  }
-  state.container.innerHTML = plot(state) + lines(state);
-}, 20);
-
-serial(state);
-
-function stop () {
+function stop () {  // eslint-disable-line
   clearInterval(interval);
   serial.stop();
 }
